@@ -16,12 +16,12 @@ export default function BottomNavigation() {
   ];
 
   return (
-    <div className="md:hidden fixed bottom-3 inset-x-0 z-40 px-3 pointer-events-none">
-      <div className="max-w-md mx-auto pointer-events-auto">
+    <div className="md:hidden fixed bottom-4 inset-x-0 z-40 px-4 pointer-events-none">
+      <div className="max-w-sm mx-auto pointer-events-auto">
         <nav 
           aria-label="Mobile Navigation"
-          className="relative flex items-center justify-around bg-black/95 backdrop-blur-xl border border-red-950/40 rounded-md px-2 py-2 shadow-2xl shadow-black"
-          style={{ paddingBottom: 'calc(0.4rem + env(safe-area-inset-bottom, 0px))' }}
+          className="relative flex items-center justify-around bg-white/[0.06] backdrop-blur-2xl border border-white/20 rounded-full px-3 py-2.5 shadow-[0_8px_32px_0_rgba(0,0,0,0.6)] ring-1 ring-white/10"
+          style={{ paddingBottom: 'calc(0.5rem + env(safe-area-inset-bottom, 0px))' }}
         >
           {navItems.map((item) => {
             const Icon = item.icon;
