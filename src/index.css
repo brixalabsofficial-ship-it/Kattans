@@ -20,6 +20,14 @@
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    touch-action: manipulation;
+  }
+
+  /* Prevent automatic mobile safari/browser zoom on inputs */
+  @media screen and (max-width: 768px) {
+    input, select, textarea {
+      font-size: 16px !important;
+    }
   }
 }
 
