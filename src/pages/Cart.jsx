@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   ShoppingBag, Trash2, Plus, Minus, Send, MapPin, 
   User, Phone, MessageSquare, AlertCircle, ArrowLeft, CheckCircle2, Lock, Gift, Sparkles, Loader2 
 } from 'lucide-react';
 import { useCartStore } from '../store/cartStore';
 import { useAuthStore } from '../store/authStore';
+import { useOrderStore } from '../store/orderStore';
 import { formatINR } from '../utils/priceFormatter';
 import { generateWhatsAppOrderUrl } from '../utils/whatsappCheckout';
 
 export default function Cart() {
+  const navigate = useNavigate();
   const { items, updateQuantity, removeItem, getSubtotal, clearCart } = useCartStore();
   const { user, openAuthModal } = useAuthStore();
+  const { addOrder } = useOrderStore();
 
   const [orderType, setOrderType] = useState('delivery');
   const [customerName, setCustomerName] = useState(user?.name || '');
@@ -60,6 +63,21 @@ export default function Cart() {
 
     setIsSubmitting(true);
 
+    // Save order in orderStore for live tracking
+    const createdOrder = addOrder({
+      items,
+      subtotal,
+      deliveryCharge,
+      memberDiscount,
+      total,
+      orderType,
+      customerName,
+      customerPhone,
+      deliveryAddress,
+      landmark,
+      specialNotes
+    });
+
     const whatsappUrl = generateWhatsAppOrderUrl({
       customer: {
         name: customerName,
@@ -72,13 +90,15 @@ export default function Cart() {
       deliveryCharge,
       total,
       orderType,
-      specialNotes: specialNotes + (user ? ' [Verified Member: 10% Off Applied]' : '')
+      specialNotes: specialNotes + ` [Order ID: ${createdOrder.id}]` + (user ? ' [Verified Member: 10% Off Applied]' : '')
     });
 
     setTimeout(() => {
       window.open(whatsappUrl, '_blank');
       setIsSubmitting(false);
-    }, 300);
+      clearCart();
+      navigate(`/track?id=${createdOrder.id}`);
+    }, 400);
   };
 
   if (items.length === 0) {

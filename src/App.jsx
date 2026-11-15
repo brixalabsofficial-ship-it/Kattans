@@ -11,6 +11,7 @@ import Home from './pages/Home';
 import Menu from './pages/Menu';
 import Cart from './pages/Cart';
 import About from './pages/About';
+import TrackOrder from './pages/TrackOrder';
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -36,6 +37,7 @@ export default function App() {
             <Route path="/menu" element={<Menu />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/about" element={<About />} />
+            <Route path="/track" element={<TrackOrder />} />
           </Routes>
         </main>
 

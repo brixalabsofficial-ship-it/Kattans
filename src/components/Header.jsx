@@ -110,6 +110,22 @@ export default function Header() {
                 </>
               )}
             </NavLink>
+            <NavLink
+              to="/track"
+              className={({ isActive }) => `
+                relative py-1 text-xs sm:text-sm font-semibold tracking-wide transition-colors
+                ${isActive ? 'text-[#B30000]' : 'text-neutral-300 hover:text-white'}
+              `}
+            >
+              {({ isActive }) => (
+                <>
+                  <span>Track Order</span>
+                  {isActive && (
+                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#B30000] rounded-full shadow-[0_0_8px_rgba(179,0,0,0.8)]" />
+                  )}
+                </>
+              )}
+            </NavLink>
             <a
               href="#contact-info"
               className="relative py-1 text-xs sm:text-sm font-semibold tracking-wide text-neutral-300 hover:text-white transition-colors"
@@ -161,18 +177,26 @@ export default function Header() {
 
                   {/* Dropdown Menu */}
                   {isUserMenuOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-black/95 backdrop-blur-2xl border border-white/20 rounded-md p-3 shadow-2xl z-50 space-y-2">
+                    <div className="absolute right-0 mt-2 w-52 bg-black/95 backdrop-blur-2xl border border-white/20 rounded-md p-3 shadow-2xl z-50 space-y-2">
                       <div>
                         <p className="text-xs font-bold text-white leading-tight">{user.name}</p>
                         <p className="text-[11px] text-neutral-400 mt-0.5">{user.phone}</p>
                       </div>
-                      <div className="pt-2 border-t border-white/10">
+                      <div className="pt-2 border-t border-white/10 space-y-1">
+                        <Link
+                          to="/track"
+                          onClick={() => setIsUserMenuOpen(false)}
+                          className="w-full flex items-center gap-2 text-xs font-semibold text-neutral-300 hover:text-white transition-colors py-1"
+                        >
+                          <ShoppingBag size={13} className="text-[#829B32]" />
+                          <span>Track My Orders</span>
+                        </Link>
                         <button
                           onClick={() => {
                             logout();
                             setIsUserMenuOpen(false);
                           }}
-                          className="w-full flex items-center gap-2 text-xs font-semibold text-[#B30000] hover:text-[#8A0000] transition-colors"
+                          className="w-full flex items-center gap-2 text-xs font-semibold text-[#B30000] hover:text-[#8A0000] transition-colors py-1"
                         >
                           <LogOut size={13} />
                           <span>Sign Out</span>

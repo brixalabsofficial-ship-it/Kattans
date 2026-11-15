@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Home, Utensils, ShoppingBag, Info } from 'lucide-react';
+import { Home, Utensils, ShoppingBag, Info, Clock } from 'lucide-react';
 import { useCartStore } from '../store/cartStore';
 
 export default function BottomNavigation() {
@@ -12,7 +12,7 @@ export default function BottomNavigation() {
     { name: 'Home', path: '/', icon: Home },
     { name: 'Menu', path: '/menu', icon: Utensils },
     { name: 'Cart', path: '/cart', icon: ShoppingBag, badge: itemCount },
-    { name: 'About', path: '/about', icon: Info },
+    { name: 'Track', path: '/track', icon: Clock },
   ];
 
   return (

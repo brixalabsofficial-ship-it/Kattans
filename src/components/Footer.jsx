@@ -73,6 +73,12 @@ export default function Footer() {
                 <Link to="/about" className="hover:text-white transition-colors">Our Story & Kitchen</Link>
               </li>
               <li>
+                <Link to="/track" className="hover:text-[#B30000] text-neutral-300 font-semibold transition-colors flex items-center gap-1.5">
+                  <Clock size={12} className="text-[#829B32]" />
+                  <span>Track Live Order</span>
+                </Link>
+              </li>
+              <li>
                 <Link to="/cart" className="hover:text-white transition-colors">Cart & Instant Checkout</Link>
               </li>
               <li>
