@@ -1,8 +1,9 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Search, UtensilsCrossed } from 'lucide-react';
 import FoodCard from '../components/FoodCard';
 import CategoryNavigation from '../components/CategoryNavigation';
+import { FoodCardSkeleton } from '../components/Skeleton';
 import { categories } from '../data/categories';
 import { products } from '../data/products';
 
@@ -15,6 +16,15 @@ export default function Menu() {
   const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [dietFilter, setDietFilter] = useState('all');
   const [sortBy, setSortBy] = useState('default');
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Initial load skeleton simulation
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 450);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleSelectCategory = (catId) => {
     setActiveCategory(catId);
@@ -175,7 +185,13 @@ export default function Menu() {
         </div>
 
         {/* Food Products Grid */}
-        {filteredProducts.length === 0 ? (
+        {isLoading ? (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-5">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <FoodCardSkeleton key={i} />
+            ))}
+          </div>
+        ) : filteredProducts.length === 0 ? (
           <div className="py-16 text-center bg-black rounded border border-white/10 p-6 max-w-md mx-auto">
             <div className="w-14 h-14 rounded bg-white/5 flex items-center justify-center mx-auto text-neutral-400 mb-3">
               <UtensilsCrossed size={26} />

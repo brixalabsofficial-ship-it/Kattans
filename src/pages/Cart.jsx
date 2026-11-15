@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ShoppingBag, Trash2, Plus, Minus, Send, MapPin, 
-  User, Phone, MessageSquare, AlertCircle, ArrowLeft, CheckCircle2, Lock, Gift, Sparkles 
+  User, Phone, MessageSquare, AlertCircle, ArrowLeft, CheckCircle2, Lock, Gift, Sparkles, Loader2 
 } from 'lucide-react';
 import { useCartStore } from '../store/cartStore';
 import { useAuthStore } from '../store/authStore';
@@ -449,10 +449,19 @@ export default function Cart() {
                 <button
                   onClick={handleConfirmOrder}
                   disabled={isSubmitting}
-                  className="w-full flex items-center justify-center gap-2 py-3.5 px-4 rounded-none bg-[#B30000] hover:bg-[#8A0000] text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider transition-all transform active:scale-95 shadow-md shadow-[#B30000]/30 cursor-pointer disabled:opacity-50"
+                  className="w-full flex items-center justify-center gap-2 py-3.5 px-4 rounded-none bg-[#B30000] hover:bg-[#8A0000] text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider transition-all transform active:scale-95 shadow-md shadow-[#B30000]/30 cursor-pointer disabled:opacity-75"
                 >
-                  <Send size={16} />
-                  <span>Confirm Order on WhatsApp</span>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 size={16} className="animate-spin" />
+                      <span>Opening WhatsApp...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send size={16} />
+                      <span>Confirm Order on WhatsApp</span>
+                    </>
+                  )}
                 </button>
               ) : (
                 <button

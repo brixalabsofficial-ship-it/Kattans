@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Utensils, HeartHandshake, ShieldCheck, Flame, ArrowRight, Clock, MapPin, Phone } from 'lucide-react';
 
@@ -7,6 +7,7 @@ import CategoryNavigation from '../components/CategoryNavigation';
 import FanFavouritesCarousel from '../components/FanFavouritesCarousel';
 import FoodCard from '../components/FoodCard';
 import SectionHeading from '../components/SectionHeading';
+import { FoodCardSkeleton, CategorySkeleton } from '../components/Skeleton';
 
 import { categories } from '../data/categories';
 import { products } from '../data/products';
@@ -15,6 +16,14 @@ import { useCartStore } from '../store/cartStore';
 
 export default function Home() {
   const { openProductModal } = useCartStore();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 400);
+    return () => clearTimeout(timer);
+  }, []);
 
   const fanFavourites = products.filter(p => p.isPopular);
   const recommendedDishes = products.filter(p => p.isRecommended).slice(0, 4);
@@ -116,9 +125,15 @@ export default function Home() {
           subtitle="Handpicked kitchen favourites guaranteed to hit the spot"
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {recommendedDishes.map((dish) => (
-            <FoodCard key={dish.id} product={dish} />
-          ))}
+          {isLoading ? (
+            Array.from({ length: 4 }).map((_, i) => (
+              <FoodCardSkeleton key={i} />
+            ))
+          ) : (
+            recommendedDishes.map((dish) => (
+              <FoodCard key={dish.id} product={dish} />
+            ))
+          )}
         </div>
       </section>
 
@@ -131,9 +146,15 @@ export default function Home() {
             subtitle="Full meals thoughtfully paired with sides and drinks for supreme satisfaction"
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {comboDishes.map((dish) => (
-              <FoodCard key={dish.id} product={dish} />
-            ))}
+            {isLoading ? (
+              Array.from({ length: 4 }).map((_, i) => (
+                <FoodCardSkeleton key={i} />
+              ))
+            ) : (
+              comboDishes.map((dish) => (
+                <FoodCard key={dish.id} product={dish} />
+              ))
+            )}
           </div>
         </div>
       </section>

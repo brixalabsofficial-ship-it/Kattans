@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Plus, Minus, Check, ShoppingBag } from 'lucide-react';
+import { X, Plus, Minus, Check, ShoppingBag, Loader2 } from 'lucide-react';
 import { useCartStore } from '../store/cartStore';
 import { formatINR } from '../utils/priceFormatter';
 
@@ -13,6 +13,7 @@ export default function FoodDetailsModal() {
   const [quantity, setQuantity] = useState(1);
   const [instructions, setInstructions] = useState('');
   const [isAddedSuccess, setIsAddedSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Initialize or reset when product opens
   React.useEffect(() => {
@@ -41,19 +42,23 @@ export default function FoodDetailsModal() {
   const totalPrice = unitPrice * quantity;
 
   const handleAddToCart = () => {
-    addItem({
-      ...product,
-      selectedVariant,
-      selectedAddons,
-      quantity,
-      instructions
-    });
-
-    setIsAddedSuccess(true);
+    setIsSubmitting(true);
     setTimeout(() => {
-      setIsAddedSuccess(false);
-      closeProductModal();
-    }, 600);
+      addItem({
+        ...product,
+        selectedVariant,
+        selectedAddons,
+        quantity,
+        instructions
+      });
+
+      setIsSubmitting(false);
+      setIsAddedSuccess(true);
+      setTimeout(() => {
+        setIsAddedSuccess(false);
+        closeProductModal();
+      }, 600);
+    }, 250);
   };
 
   return (
@@ -223,13 +228,19 @@ export default function FoodDetailsModal() {
             {/* Add to Cart Button */}
             <button
               onClick={handleAddToCart}
-              className={`flex-1 flex items-center justify-center gap-2 py-3 px-5 rounded font-extrabold text-xs sm:text-sm text-white transition-all transform active:scale-95 shadow-md ${
+              disabled={isSubmitting}
+              className={`flex-1 flex items-center justify-center gap-2 py-3 px-5 rounded font-extrabold text-xs sm:text-sm text-white transition-all transform active:scale-95 shadow-md disabled:opacity-75 ${
                 isAddedSuccess
                   ? 'bg-[#829B32]'
                   : 'bg-[#B30000] hover:bg-[#8A0000]'
               }`}
             >
-              {isAddedSuccess ? (
+              {isSubmitting ? (
+                <>
+                  <Loader2 size={16} className="animate-spin" />
+                  <span>Adding...</span>
+                </>
+              ) : isAddedSuccess ? (
                 <>
                   <Check size={16} />
                   <span>Added to Cart!</span>

@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Plus, Star } from 'lucide-react';
+import { Plus, Star, Loader2 } from 'lucide-react';
 import { useCartStore } from '../store/cartStore';
 import { formatINR } from '../utils/priceFormatter';
 
 export default function FoodCard({ product }) {
   const { openProductModal } = useCartStore();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleAdd = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      openProductModal(product);
+      setIsLoading(false);
+    }, 250);
+  };
 
   return (
     <motion.div
@@ -73,11 +82,21 @@ export default function FoodCard({ product }) {
           </div>
 
           <button
-            onClick={() => openProductModal(product)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-[#B30000] hover:bg-[#8A0000] text-white text-xs font-bold transition-all active:scale-95 cursor-pointer shadow-md shadow-[#B30000]/30"
+            onClick={handleAdd}
+            disabled={isLoading}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-[#B30000] hover:bg-[#8A0000] text-white text-xs font-bold transition-all active:scale-95 cursor-pointer shadow-md shadow-[#B30000]/30 disabled:opacity-75"
           >
-            <Plus size={14} />
-            <span>Add</span>
+            {isLoading ? (
+              <>
+                <Loader2 size={13} className="animate-spin" />
+                <span>Loading...</span>
+              </>
+            ) : (
+              <>
+                <Plus size={14} />
+                <span>Add</span>
+              </>
+            )}
           </button>
         </div>
       </div>

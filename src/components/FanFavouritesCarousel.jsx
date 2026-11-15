@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Plus, Star } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Plus, Star, Loader2 } from 'lucide-react';
 import { useCartStore } from '../store/cartStore';
 import { formatINR } from '../utils/priceFormatter';
 
@@ -8,7 +8,17 @@ export default function FanFavouritesCarousel({ products }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(1);
   const [isPaused, setIsPaused] = useState(false);
+  const [loadingId, setLoadingId] = useState(null);
   const { openProductModal } = useCartStore();
+
+  const handleOrder = (product, e) => {
+    if (e) e.stopPropagation();
+    setLoadingId(product.id);
+    setTimeout(() => {
+      openProductModal(product);
+      setLoadingId(null);
+    }, 250);
+  };
 
   const count = products.length;
 
@@ -137,13 +147,15 @@ export default function FanFavouritesCarousel({ products }) {
                 </div>
 
                 <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    openProductModal(currentProduct);
-                  }}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-bold transition-all active:scale-95 cursor-pointer bg-[#B30000] hover:bg-[#8A0000] text-white shadow-md shadow-[#B30000]/40"
+                  onClick={(e) => handleOrder(currentProduct, e)}
+                  disabled={loadingId === currentProduct.id}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-bold transition-all active:scale-95 cursor-pointer bg-[#B30000] hover:bg-[#8A0000] text-white shadow-md shadow-[#B30000]/40 disabled:opacity-75"
                 >
-                  <Plus size={14} />
+                  {loadingId === currentProduct.id ? (
+                    <Loader2 size={13} className="animate-spin" />
+                  ) : (
+                    <Plus size={14} />
+                  )}
                   <span>Order</span>
                 </button>
               </div>
@@ -247,17 +259,19 @@ export default function FanFavouritesCarousel({ products }) {
                   </div>
 
                   <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      openProductModal(product);
-                    }}
-                    className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded text-xs font-bold transition-all active:scale-95 cursor-pointer shadow-md ${
+                    onClick={(e) => handleOrder(product, e)}
+                    disabled={loadingId === product.id}
+                    className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded text-xs font-bold transition-all active:scale-95 cursor-pointer shadow-md disabled:opacity-75 ${
                       isCenter 
                         ? 'bg-[#B30000] hover:bg-[#8A0000] text-white shadow-[#B30000]/40' 
                         : 'bg-white/10 text-neutral-300 hover:bg-[#B30000] hover:text-white'
                     }`}
                   >
-                    <Plus size={14} />
+                    {loadingId === product.id ? (
+                      <Loader2 size={13} className="animate-spin" />
+                    ) : (
+                      <Plus size={14} />
+                    )}
                     <span>Order</span>
                   </button>
                 </div>
