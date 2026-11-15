@@ -72,12 +72,12 @@ export default function HeroSlider() {
           </div>
 
           {/* Floating 'Order Now' Action Button */}
-          <div className="absolute bottom-3 sm:bottom-6 md:bottom-8 left-3 sm:left-6 md:left-10 z-20">
+          <div className="absolute bottom-2.5 sm:bottom-6 md:bottom-8 left-2.5 sm:left-6 md:left-10 z-20">
             <Link
               to="/menu"
-              className="inline-flex items-center gap-1.5 px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 md:py-2.5 rounded-none bg-[#B30000] hover:bg-[#8A0000] text-white text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wider transition-all transform active:scale-95 shadow-xl shadow-black/80 border-0 cursor-pointer"
+              className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-4 md:px-5 py-1 sm:py-2 md:py-2.5 rounded-none bg-[#B30000] hover:bg-[#8A0000] text-white text-[9px] sm:text-xs md:text-sm font-bold uppercase tracking-wider transition-all transform active:scale-95 shadow-xl shadow-black/80 border-0 cursor-pointer"
             >
-              <ShoppingBag size={14} className="text-white" />
+              <ShoppingBag size={11} className="text-white sm:w-3.5 sm:h-3.5" />
               <span>Order Now</span>
               <span className="text-white/80 font-normal">→</span>
             </Link>
