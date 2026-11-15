@@ -189,7 +189,7 @@ export default function Header() {
             {/* Order Now Desktop CTA Button */}
             <Link
               to="/menu"
-              className="hidden lg:inline-flex items-center gap-1.5 px-5 py-2 rounded-full bg-[#B30000] hover:bg-[#8A0000] text-white text-xs font-bold uppercase tracking-wider transition-all transform active:scale-95 shadow-lg shadow-[#B30000]/30 border-0"
+              className="hidden lg:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#B30000] hover:bg-[#8A0000] text-white text-[11px] font-bold uppercase tracking-wider transition-all transform active:scale-95 shadow-md shadow-[#B30000]/30 border-0"
             >
               Order Now
             </Link>
