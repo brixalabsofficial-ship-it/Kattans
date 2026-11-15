@@ -65,33 +65,54 @@ export default function Header() {
             <NavLink
               to="/"
               className={({ isActive }) => `
-                text-xs sm:text-sm font-semibold tracking-wide transition-colors
+                relative py-1 text-xs sm:text-sm font-semibold tracking-wide transition-colors
                 ${isActive ? 'text-[#B30000]' : 'text-neutral-300 hover:text-white'}
               `}
             >
-              Home
+              {({ isActive }) => (
+                <>
+                  <span>Home</span>
+                  {isActive && (
+                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#B30000] rounded-full shadow-[0_0_8px_rgba(179,0,0,0.8)]" />
+                  )}
+                </>
+              )}
             </NavLink>
             <NavLink
               to="/menu"
               className={({ isActive }) => `
-                text-xs sm:text-sm font-semibold tracking-wide transition-colors
+                relative py-1 text-xs sm:text-sm font-semibold tracking-wide transition-colors
                 ${isActive ? 'text-[#B30000]' : 'text-neutral-300 hover:text-white'}
               `}
             >
-              Menu
+              {({ isActive }) => (
+                <>
+                  <span>Menu</span>
+                  {isActive && (
+                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#B30000] rounded-full shadow-[0_0_8px_rgba(179,0,0,0.8)]" />
+                  )}
+                </>
+              )}
             </NavLink>
             <NavLink
               to="/about"
               className={({ isActive }) => `
-                text-xs sm:text-sm font-semibold tracking-wide transition-colors
+                relative py-1 text-xs sm:text-sm font-semibold tracking-wide transition-colors
                 ${isActive ? 'text-[#B30000]' : 'text-neutral-300 hover:text-white'}
               `}
             >
-              About Us
+              {({ isActive }) => (
+                <>
+                  <span>About Us</span>
+                  {isActive && (
+                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#B30000] rounded-full shadow-[0_0_8px_rgba(179,0,0,0.8)]" />
+                  )}
+                </>
+              )}
             </NavLink>
             <a
               href="#contact-info"
-              className="text-xs sm:text-sm font-semibold tracking-wide text-neutral-300 hover:text-white transition-colors"
+              className="relative py-1 text-xs sm:text-sm font-semibold tracking-wide text-neutral-300 hover:text-white transition-colors"
             >
               Contact
             </a>
