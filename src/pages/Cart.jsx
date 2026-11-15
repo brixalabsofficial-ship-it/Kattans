@@ -63,7 +63,7 @@ export default function Cart() {
 
     setIsSubmitting(true);
 
-    // Save order in orderStore for live tracking
+    // Save direct website order in orderStore
     const createdOrder = addOrder({
       items,
       subtotal,
@@ -78,27 +78,12 @@ export default function Cart() {
       specialNotes
     });
 
-    const whatsappUrl = generateWhatsAppOrderUrl({
-      customer: {
-        name: customerName,
-        phone: customerPhone,
-        address: deliveryAddress,
-        landmark: landmark
-      },
-      items,
-      subtotal,
-      deliveryCharge,
-      total,
-      orderType,
-      specialNotes: specialNotes + ` [Order ID: ${createdOrder.id}]` + (user ? ' [Verified Member: 10% Off Applied]' : '')
-    });
-
     setTimeout(() => {
-      window.open(whatsappUrl, '_blank');
       setIsSubmitting(false);
       clearCart();
+      // Instantly direct to the website order tracking page
       navigate(`/track?id=${createdOrder.id}`);
-    }, 400);
+    }, 600);
   };
 
   if (items.length === 0) {
@@ -474,12 +459,12 @@ export default function Cart() {
                   {isSubmitting ? (
                     <>
                       <Loader2 size={16} className="animate-spin" />
-                      <span>Opening WhatsApp...</span>
+                      <span>Placing Order...</span>
                     </>
                   ) : (
                     <>
-                      <Send size={16} />
-                      <span>Confirm Order on WhatsApp</span>
+                      <CheckCircle2 size={16} />
+                      <span>Place Order Now • {formatINR(total)}</span>
                     </>
                   )}
                 </button>
@@ -489,17 +474,17 @@ export default function Cart() {
                   className="w-full flex items-center justify-center gap-2 py-3.5 px-4 rounded-none bg-[#B30000] hover:bg-[#8A0000] text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider transition-all transform active:scale-95 shadow-lg shadow-[#B30000]/40 cursor-pointer animate-pulse"
                 >
                   <Lock size={15} />
-                  <span>Sign In to Complete Order (Get 10% Off)</span>
+                  <span>Sign In to Place Order (Get 10% Off)</span>
                 </button>
               )}
 
-              {/* WhatsApp confirmation note */}
+              {/* Direct Website Order Guarantee */}
               <div className="p-2.5 rounded bg-black border border-white/10 text-[10px] text-neutral-400 flex items-start gap-2">
-                <AlertCircle size={14} className="text-[#829B32] flex-shrink-0 mt-0.5" />
+                <CheckCircle2 size={14} className="text-[#829B32] flex-shrink-0 mt-0.5" />
                 <p>
                   {user 
-                    ? "Clicking will open WhatsApp with your formatted order summary and 10% member discount applied."
-                    : "Please sign in with your mobile number to verify your identity, unlock member benefits, and place your order."}
+                    ? "Your order will be placed directly with CKB Kattans kitchen. You can track live preparation & delivery right here."
+                    : "Please sign in with your mobile number to unlock 10% member savings and place your order directly."}
                 </p>
               </div>
 

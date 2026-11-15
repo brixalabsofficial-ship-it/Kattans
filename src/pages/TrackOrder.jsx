@@ -90,7 +90,7 @@ export default function TrackOrder() {
             <AlertCircle size={28} className="text-[#B30000] mx-auto" />
             <h3 className="text-base font-bold text-white">Order Not Found</h3>
             <p className="text-xs text-neutral-400 max-w-sm mx-auto">
-              We couldn't locate an order with ID "{inputOrderId}". Please check your order confirmation on WhatsApp or verify the ID.
+              We couldn't locate an order with ID "{inputOrderId}". Please check your order reference number or verify the ID.
             </p>
           </div>
         )}
